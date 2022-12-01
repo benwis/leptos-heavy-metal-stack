@@ -1,5 +1,5 @@
 [package]
-name = "todo-app-sqlite-axum"
+name = "leptos-heavy-metal-stack"
 version = "0.1.0"
 edition = "2021"
 
