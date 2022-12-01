@@ -1,5 +1,6 @@
 use cfg_if::cfg_if;
 use leptos::*;
+use leptos_meta::*;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};
 
@@ -129,8 +130,9 @@ pub fn Todos(cx: Scope) -> Element {
     view! {
         cx,
         <div>
+        <Stylesheet href="/static/styles/output.css"/>
             <MultiActionForm action=add_todo>
-                <label>
+                <label class="text-3xl text-red-400">
                     "Add a Todo"
                     <input type="text" name="title"/>
                 </label>

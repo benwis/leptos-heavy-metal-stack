@@ -13,6 +13,7 @@ pub const HTML_START: &str = r##"<!DOCTYPE html>
     <title>Cargo Leptos</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/styles/output.css">
     <script type="module">import init from '/pkg/app.js';init('/pkg/app.wasm');</script>
     <link rel="preload" href="/pkg/app.wasm" as="fetch" type="application/wasm" crossorigin="">
     <link rel="stylesheet" href="/pkg/app.css">
@@ -35,6 +36,7 @@ pub const HTML_START: &str = r##"<!DOCTYPE html>
     <title>Cargo Leptos</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/styles/output.css">
     <script type="module">import init from '/pkg/app.js';init('/pkg/app.wasm');</script>
     <link rel="preload" href="/pkg/app.wasm" as="fetch" type="application/wasm" crossorigin="">
     <link rel="stylesheet" href="/pkg/app.css">
