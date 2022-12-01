@@ -11,7 +11,7 @@ if #[cfg(feature = "ssr")] {
     };
     use std::net::SocketAddr;
     use crate::todo::*;
-    use todo_app_sqlite_axum::*;
+    use leptos_heavy_metal_stack::*;
     use http::StatusCode;
     use tower_http::services::ServeDir;
 
@@ -23,7 +23,7 @@ if #[cfg(feature = "ssr")] {
         simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
 
         let mut conn = db().await.expect("couldn't connect to DB");
-        sqlx::migrate!()
+        sqlx::migrate!("./migrations")
             .run(&mut conn)
             .await
             .expect("could not run SQLx migrations");
@@ -64,7 +64,7 @@ if #[cfg(feature = "ssr")] {
 
     // client-only stuff for Trunk
     else {
-        use todo_app_sqlite_axum::todo::*;
+        use leptos_heavy_metal_stack::todo::*;
 
         pub fn main() {
             console_error_panic_hook::set_once();
