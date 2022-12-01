@@ -21,3 +21,7 @@ npx tailwindcss -i styles/tailwind.css -o static/styles/output.css --watch
 cargo leptos serve
 ```
 
+## Sources
+Setup Tailwind using the instructions from here:
+https://github.com/gbj/leptos/discussions/125
+
