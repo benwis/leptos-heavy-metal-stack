@@ -15,7 +15,7 @@ cfg_if! {
             console_error_panic_hook::set_once();
 
             leptos::hydrate(body().unwrap(), |cx| {
-                view! { cx,  <TodoApp/> }
+                view! { cx,  <App/> }
             });
         }
     }
