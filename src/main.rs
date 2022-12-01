@@ -23,7 +23,7 @@ if #[cfg(feature = "ssr")] {
         simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
 
         let mut conn = db().await.expect("couldn't connect to DB");
-        sqlx::migrate!()
+        sqlx::migrate!("./migrations")
             .run(&mut conn)
             .await
             .expect("could not run SQLx migrations");
