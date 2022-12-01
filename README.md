@@ -1,22 +1,23 @@
-# Leptos Todo App Sqlite with Axum
+# Heavy Metal Stack
+## Leptos stack with Axum, TailwindCSS, and Sqlite 
 
-This example creates a basic todo app with an Axum backend that uses Leptos' server functions to call sqlx from the client and seamlessly run it on the server.
+This example creates a basic todo app with an Axum backend that uses Leptos' server functions to call sqlx from the client and seamlessly run it on the server. It has an sqlite DB and can
+be run with cargo leptos
 
-## Server Side Rendering With Hydration
-
-To run it as a server side app with hydration, first you should run
-
+## Install Cargo Leptos
 ```bash
-wasm-pack build --target=web --no-default-features --features=hydrate
+cargo install --locked cargo-leptos
+```
+## Install TailwindCSS
+See instructions [here](https://github.com/tailwindlabs/tailwindcss/releases).
+
+## Run The Site
+1. Build the Tailwind CSS
+```bash
+npx tailwindcss -i styles/tailwind.css -o static/styles/output.css --watch
+```
+2. In another window, run 
+```bash
+cargo leptos serve
 ```
 
-to generate the WebAssembly to hydrate the HTML that is generated on the server.
-
-Then run the server with `cargo run` to serve the server side rendered HTML and the WASM bundle for hydration.
-
-```bash
-cargo run --no-default-features --features=ssr
-```
-
-> Note that if your hydration code changes, you will have to rerun the wasm-pack command above
-> This should be temporary, and vastly improve once cargo-leptos becomes ready for prime time!
