@@ -89,7 +89,7 @@ pub async fn delete_todo(id: u16) -> Result<(), ServerFnError> {
 }
 
 #[component]
-pub fn TodoApp(cx: Scope) -> Element {
+pub fn App(cx: Scope) -> Element {
     view! {
         cx,
         <div>
