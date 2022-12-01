@@ -12,3 +12,6 @@ Cargo.lock
 
 # Wasm File Dir
 /pkg/
+
+# Ignore sqlite DB
+Todos.db
