@@ -21,6 +21,27 @@ npx tailwindcss -i styles/tailwind.css -o static/styles/output.css --watch
 cargo leptos serve
 ```
 
+## Running without cargo-leptos
+
+This template can still be used even without installing cargo-leptos, using the below process.
+
+1. Build the Tailwind CSS
+```bash
+npx tailwindcss -i styles/tailwind.css -o static/styles/output.css --watch
+```
+
+2. Build the Client Side WASM
+```bash
+wasm-pack build --target=web --no-default-features --features=hydrate
+```
+
+3. Start the server to serve the content
+```bash
+cargo run --no-default-features --features=ssr
+```
+
+> You will have to rerun 2 if the client side WASM changes and 3 if the server code does. It might be safer to do both
+
 ## Sources
 Setup Tailwind using the instructions from here:
 https://github.com/gbj/leptos/discussions/125

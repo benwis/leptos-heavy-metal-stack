@@ -89,28 +89,6 @@ pub async fn delete_todo(id: u16) -> Result<(), ServerFnError> {
 }
 
 #[component]
-pub fn App(cx: Scope) -> Element {
-    view! {
-        cx,
-        <div>
-            <Router>
-                <header>
-                    <h1>"My Tasks"</h1>
-                </header>
-                <main>
-                    <Routes>
-                        <Route path="" element=|cx| view! {
-                            cx,
-                            <Todos/>
-                        }/>
-                    </Routes>
-                </main>
-            </Router>
-        </div>
-    }
-}
-
-#[component]
 pub fn Todos(cx: Scope) -> Element {
     let add_todo = create_server_multi_action::<AddTodo>(cx);
     let delete_todo = create_server_action::<DeleteTodo>(cx);
@@ -132,11 +110,12 @@ pub fn Todos(cx: Scope) -> Element {
         <div>
         <Stylesheet href="/static/styles/output.css"/>
             <MultiActionForm action=add_todo>
-                <label class="text-3xl text-red-400">
+                <label class="text-3xl text-red-400 block">
                     "Add a Todo"
-                    <input type="text" name="title"/>
-                </label>
-                <input type="submit" value="Add"/>
+                    </label>
+
+                    <input type="text" name="title" class="mx-4 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                <button type="submit">"Add"</button>
             </MultiActionForm>
             <div>
                 <Suspense fallback=view! {cx, <p>"Loading..."</p> }>
