@@ -35,7 +35,7 @@ cfg_if! {
 }
 
 #[server(GetTodos, "/api")]
-pub async fn get_todos(cx: Scope) -> Result<Vec<Todo>, ServerFnError> {
+pub async fn get_todos(_cx: Scope) -> Result<Vec<Todo>, ServerFnError> {
     // this is just an example of how to access server context injected in the handlers
     // http::Request doesn't implement Clone, so more work will be needed to do use_context() on this
     // let req = use_context::<http::Request<axum::body::BoxBody>>(cx)
@@ -71,7 +71,7 @@ pub async fn add_todo(title: String) -> Result<(), ServerFnError> {
         .execute(&mut conn)
         .await
     {
-        Ok(row) => Ok(()),
+        Ok(_) => Ok(()),
         Err(e) => Err(ServerFnError::ServerError(e.to_string())),
     }
 }
@@ -113,7 +113,6 @@ pub fn Todos(cx: Scope) -> Element {
                 <label class="text-3xl text-red-400 block">
                     "Add a Todo"
                     </label>
-
                     <input type="text" name="title" class="mx-4 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 <button type="submit">"Add"</button>
             </MultiActionForm>
@@ -148,7 +147,7 @@ pub fn Todos(cx: Scope) -> Element {
                                                                 <li>
                                                                     {todo.title}
                                                                     <ActionForm action=delete_todo.clone()>
-                                                                        <input type="hidden" name="id" value={todo.id}/>
+                                                                        <input type="hidden" name="id" value=todo.id/>
                                                                         <input type="submit" value="X"/>
                                                                     </ActionForm>
                                                                 </li>

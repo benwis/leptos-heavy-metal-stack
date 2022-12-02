@@ -1,5 +1,4 @@
 use cfg_if::cfg_if;
-use leptos::*;
 pub mod app;
 pub mod routes;
 
@@ -8,6 +7,7 @@ cfg_if! {
     if #[cfg(feature = "hydrate")] {
         use wasm_bindgen::prelude::wasm_bindgen;
         use crate::app::*;
+        use leptos::*;
 
         #[wasm_bindgen]
         pub fn hydrate() {
