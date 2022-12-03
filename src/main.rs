@@ -15,6 +15,7 @@ if #[cfg(feature = "ssr")] {
     use http::StatusCode;
     use tower_http::services::ServeDir;
     use crate::routes::todo::db;
+    use leptos_axum::RenderOptions;
 
     #[tokio::main]
     async fn main() {
@@ -45,13 +46,14 @@ if #[cfg(feature = "ssr")] {
             )
         }
 
+        let render_options: RenderOptions = leptos_axum::RenderOptionsBuilder::default().client_pkg_path("/pkg/todo_app_sqlite_axum").auto_reload(3001).build().expect("Failed to Parse RenderOptions");
 
         // build our application with a route
         let app = Router::new()
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
         .nest_service("/pkg", pkg_service)
         .nest_service("/static", static_service)
-        .fallback(leptos_axum::render_app_to_stream("leptos_heavy_metal_stack", |cx| view! { cx, <App/> }));
+        .fallback(leptos_axum::render_app_to_stream(render_options, |cx| view! { cx, <App/> }));
 
         // run our app with hyper
         // `axum::Server` is a re-export of `hyper::Server`

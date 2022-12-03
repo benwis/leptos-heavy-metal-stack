@@ -21,6 +21,16 @@ npx tailwindcss -i styles/tailwind.css -o static/styles/output.css --watch
 cargo leptos serve
 ```
 
+## Run The Site in Dev Mode and Watch for Changes
+1. Build the Tailwind CSS and Watch
+```bash
+npx tailwindcss -i styles/tailwind.css -o static/styles/output.css --watch
+```
+2. In another window, run 
+```bash
+cargo leptos watch
+```
+
 ## Running without cargo-leptos
 
 This template can still be used even without installing cargo-leptos, using the below process.
