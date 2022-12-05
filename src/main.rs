@@ -35,6 +35,8 @@ if #[cfg(feature = "ssr")] {
         // These are Tower Services that will serve files from the static and pkg repos.
         // HandleError is needed as Axum requires services to implement Infallible Errors
         // because all Errors are converted into Responses
+        // static_service serves static files from the static dir in the root
+        // pkg_service serves generated WASM/JS build output from wasm-bindgen in /pkg
         let static_service = HandleError::new( ServeDir::new("./static"), handle_file_error);
         let pkg_service = HandleError::new( ServeDir::new("./pkg"), handle_file_error);
 
