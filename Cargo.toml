@@ -1,5 +1,5 @@
 [package]
-name = "leptos-heavy-metal-stack"
+name = "leptos_heavy_metal_stack"
 version = "0.1.0"
 edition = "2021"
 
@@ -28,7 +28,6 @@ axum = { version = "0.6.1", optional = true }
 tower = { version = "0.4.13", optional = true }
 tower-http = { version = "0.3.4", features = ["fs"], optional = true }
 tokio = { version = "1.22.0", features = ["full"], optional = true }
-typed-builder = "0.11"
 http = { version = "0.2.8", optional = true }
 sqlx = { version = "0.6.2", features = [
 	"runtime-tokio-rustls",

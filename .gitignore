@@ -18,3 +18,6 @@ Todos.db
 
 # Remove generated CSS
 static/styles/*
+
+# Don't store conf file
+.leptos.kdl
