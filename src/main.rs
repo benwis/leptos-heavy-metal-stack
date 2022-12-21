@@ -15,8 +15,7 @@ if #[cfg(feature = "ssr")] {
     use http::StatusCode;
     use tower_http::services::ServeDir;
     use crate::routes::todo::db;
-    use std::env;
-
+    use leptos_config::get_configuration;
     #[tokio::main]
     async fn main() {
         let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
@@ -48,14 +47,13 @@ if #[cfg(feature = "ssr")] {
             )
         }
 
-        let render_options: RenderOptions = RenderOptions::builder().pkg_path("/pkg/leptos_heavy_metal_stack").reload_port(3001).environment(&env::var("RUST_ENV")).build();
-        render_options.write_to_file();
+        let conf_file = get_configuration().await.unwrap();
         // build our application with a route
         let app = Router::new()
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
         .nest_service("/pkg", pkg_service)
         .nest_service("/static", static_service)
-        .fallback(leptos_axum::render_app_to_stream(render_options, |cx| view! { cx, <App/> }));
+        .fallback(leptos_axum::render_app_to_stream(conf_file.leptos_options, |cx| view! { cx, <App/> }));
 
         // run our app with hyper
         // `axum::Server` is a re-export of `hyper::Server`

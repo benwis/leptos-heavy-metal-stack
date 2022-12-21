@@ -4,6 +4,9 @@
 This example creates a basic todo app with an Axum backend that uses Leptos' server functions to call sqlx from the client and seamlessly run it on the server. It has an sqlite DB and can
 be run with cargo leptos
 
+> Heads Up
+cargo-leptos is still undergoing heavy development. While this repo is being worked on, it's possible some oddities may occur. If any are noticed, issues are welcoe.
+
 ## Install Cargo Leptos
 ```bash
 cargo install --locked cargo-leptos

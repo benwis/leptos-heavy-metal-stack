@@ -109,7 +109,6 @@ pub fn Todos(cx: Scope) -> Element {
     view! {
         cx,
         <div>
-        <Stylesheet href="/static/styles/output.css"/>
             <MultiActionForm action=add_todo>
                 <label class="text-3xl text-red-400 block">
                     "Add a Todo"
