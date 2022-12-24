@@ -9,18 +9,15 @@ if #[cfg(feature = "ssr")] {
         error_handling::HandleError,
         Router,
     };
-    use std::net::SocketAddr;
     use crate::app::*;
     use leptos_heavy_metal_stack::*;
     use http::StatusCode;
     use tower_http::services::ServeDir;
     use crate::routes::todo::db;
     use leptos_config::get_configuration;
+
     #[tokio::main]
     async fn main() {
-        let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-        log::debug!("serving at {addr}");
-
         simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
 
         let mut conn = db().await.expect("couldn't connect to DB");
@@ -47,13 +44,16 @@ if #[cfg(feature = "ssr")] {
             )
         }
 
-        let conf_file = get_configuration().await.unwrap();
+        let leptos_options = get_configuration(Some("Cargo.toml")).await.unwrap().leptos_options;
+        let addr = leptos_options.site_address.clone();
+        log::debug!("serving at {addr}");
+
         // build our application with a route
         let app = Router::new()
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
         .nest_service("/pkg", pkg_service)
         .nest_service("/static", static_service)
-        .fallback(leptos_axum::render_app_to_stream(conf_file.leptos_options, |cx| view! { cx, <App/> }));
+        .fallback(leptos_axum::render_app_to_stream(leptos_options, |cx| view! { cx, <App/> }));
 
         // run our app with hyper
         // `axum::Server` is a re-export of `hyper::Server`
