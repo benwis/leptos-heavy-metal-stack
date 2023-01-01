@@ -4,8 +4,8 @@ use leptos_meta::*;
 use leptos_router::*;
 
 #[component]
-pub fn App(cx: Scope) -> Element {
-    provide_context(cx, MetaContext::new());
+pub fn App(cx: Scope) -> impl IntoView {
+    provide_meta_context(cx);
     view! {
         cx,
         <div>
@@ -18,7 +18,7 @@ pub fn App(cx: Scope) -> Element {
                 <div>
                 <Title text="Leptos Heavy Metal Stack"/>
                     <Routes>
-                        <Route path="" element=|cx| view! {
+                        <Route path="" view=|cx| view! {
                             cx,
                             <Todos/>
                         }/>

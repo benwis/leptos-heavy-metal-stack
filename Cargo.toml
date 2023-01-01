@@ -13,13 +13,13 @@ console_log = "0.2.0"
 console_error_panic_hook = "0.1.7"
 futures = "0.3.25"
 cfg-if = "1.0.0"
-leptos = { path = "../leptos/leptos", default-features = false, features = [
+leptos = { git = "https://github.com/gbj/leptos", default-features = false, features = [
 	"serde",
 ] }
-leptos_axum = { path = "../leptos/integrations/axum", default-features = false, optional = true }
-leptos_config = { path = "../leptos/leptos_config", default-features = false}
-leptos_meta = { path = "../leptos/meta",  default-features = false }
-leptos_router = { path = "../leptos/router", default-features = false }
+leptos_axum = { git = "https://github.com/gbj/leptos", default-features = false, optional = true }
+leptos_config = { git = "https://github.com/gbj/leptos", default-features = false}
+leptos_meta = { git = "https://github.com/gbj/leptos",  default-features = false }
+leptos_router = { git = "https://github.com/gbj/leptos", default-features = false }
 log = "0.4.17"
 simple_logger = "4.0.0"
 serde = { version = "1.0.152", features = ["derive"] }
@@ -58,7 +58,7 @@ skip_feature_sets = [["csr", "ssr"], ["csr", "hydrate"], ["ssr", "hydrate"]]
 
 [package.metadata.leptos]
 # The name used by wasm-bindgen/cargo-leptos for the JS/WASM bundle. Defaults to the crate name   
-output-name = "leptos-heavy-metal-stack"	
+output-name = "leptos_heavy_metal_stack"	
 # The site root folder is where cargo-leptos generate all output. WARNING: all content of this folder will be erased on a rebuild. Use it in your server setup.
 site-root = "target/site"
 # The site-root relative folder where all compiled output (JS, WASM and CSS) is written
