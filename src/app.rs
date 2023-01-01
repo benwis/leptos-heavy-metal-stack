@@ -4,22 +4,26 @@ use leptos_meta::*;
 use leptos_router::*;
 
 #[component]
-pub fn App(cx: Scope) -> Element {
-    provide_context(cx, MetaContext::new());
+pub fn App(cx: Scope) -> impl IntoView {
+    provide_meta_context(cx);
     view! {
         cx,
         <div>
+        <Stylesheet id="leptos" href="/static/styles/output.css" />
             <Router>
                 <header>
                     <h1>"My Tasks"</h1>
                 </header>
                 <main>
+                <div>
+                <Title text="Leptos Heavy Metal Stack"/>
                     <Routes>
-                        <Route path="" element=|cx| view! {
+                        <Route path="" view=|cx| view! {
                             cx,
                             <Todos/>
                         }/>
                     </Routes>
+                    </div>
                 </main>
             </Router>
         </div>
