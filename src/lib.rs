@@ -1,8 +1,8 @@
 use cfg_if::cfg_if;
 pub mod app;
 pub mod components;
+pub mod file;
 pub mod routes;
-
 // Needs to be in lib.rs AFAIK because wasm-bindgen needs us to be compiling a lib. I may be wrong.
 cfg_if! {
     if #[cfg(feature = "hydrate")] {

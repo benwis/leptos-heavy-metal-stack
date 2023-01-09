@@ -4,6 +4,8 @@
 This example creates a basic todo app with an Axum backend that uses Leptos' server functions to call sqlx from the client and seamlessly run it on the server. It has an sqlite DB and can
 be run with cargo leptos
 
+> This starter uses git versions of leptos and the leptos packages because the framework is still moving quickly. There's a chance this is ahead of the current release, and that is intended. If it's behind git, feel free to open a PR or submit an issue.
+
 ## Install Cargo Leptos
 ```bash
 cargo install --locked cargo-leptos
@@ -16,7 +18,7 @@ cargo-leptos is now the easiest and most featureful way to build server side ren
 
 0. Build the Tailwind CSS
 ```bash
-npx tailwindcss -i styles/tailwind.css -o static/styles/output.css --watch
+npx tailwindcss -i styles/input.css -o src/styles/output.css --watch
 ```
 1. Install cargo-leptos
 ```bash

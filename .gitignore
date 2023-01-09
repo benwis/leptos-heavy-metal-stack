@@ -17,4 +17,4 @@ Cargo.lock
 Todos.db
 
 # Remove generated CSS
-static/styles/*
+src/styles/*

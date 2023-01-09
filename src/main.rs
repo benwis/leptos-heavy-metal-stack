@@ -6,15 +6,16 @@ cfg_if! {
 if #[cfg(feature = "ssr")] {
     use axum::{
         routing::{post},
-        error_handling::HandleError,
+        extract::Extension,
         Router,
     };
     use crate::app::*;
     use leptos_heavy_metal_stack::*;
-    use http::StatusCode;
-    use tower_http::services::ServeDir;
+    use crate::file::file_handler;
     use crate::routes::todo::db;
     use leptos_config::get_configuration;
+    use leptos_axum::{LeptosRoutes,generate_route_list};
+    use std::sync::Arc;
 
     #[tokio::main]
     async fn main() {
@@ -30,41 +31,16 @@ if #[cfg(feature = "ssr")] {
 
         let conf = get_configuration(Some("Cargo.toml")).await.unwrap();
         let leptos_options = conf.leptos_options;
-        let site_root = &leptos_options.site_root;
-        let pkg_dir = &leptos_options.site_pkg_dir;
-
-        // The URL path of the generated JS/WASM bundle from cargo-leptos
-        let bundle_path = format!("/{site_root}/{pkg_dir}");
-        // The filesystem path of the generated JS/WASM bundle from cargo-leptos
-        let bundle_filepath = format!("./{site_root}/{pkg_dir}");
         let addr = leptos_options.site_address.clone();
+        let routes = generate_route_list(|cx| view! { cx, <App/> }).await;
         log::debug!("serving at {addr}");
-
-        // These are Tower Services that will serve files from the static and pkg repos.
-        // HandleError is needed as Axum requires services to implement Infallible Errors
-        // because all Errors are converted into Responses
-        // static_service serves static files from the static dir in the root
-        // pkg_service serves generated WASM/JS build output from wasm-bindgen in /pkg
-        let static_service = HandleError::new( ServeDir::new("./static"), handle_file_error);
-        let pkg_service = HandleError::new( ServeDir::new("./pkg"), handle_file_error);
-        let cargo_leptos_service = HandleError::new( ServeDir::new(&bundle_filepath), handle_file_error);
-
-        /// Convert the Errors from ServeDir to a type that implements IntoResponse
-        async fn handle_file_error(err: std::io::Error) -> (StatusCode, String) {
-            (
-                StatusCode::NOT_FOUND,
-                format!("File Not Found: {}", err),
-            )
-        }
 
         // build our application with a route
         let app = Router::new()
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
-        .nest_service("/pkg", pkg_service) // Only need if using wasm-pack. Can be deleted if using cargo-leptos
-        .nest_service(&bundle_path, cargo_leptos_service) // Only needed if using cargo-leptos. Can be deleted if using wasm-pack and cargo-run
-        .nest_service("/static", static_service)
-        .fallback(leptos_axum::render_app_to_stream(leptos_options, |cx| view! { cx, <App/> }));
-
+        .leptos_routes(leptos_options.clone(), routes, |cx| view! { cx, <App/> } )
+        .fallback(file_handler)
+        .layer(Extension(Arc::new(leptos_options)));
         // run our app with hyper
         // `axum::Server` is a re-export of `hyper::Server`
         axum::Server::bind(&addr)
