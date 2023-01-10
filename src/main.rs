@@ -5,7 +5,7 @@ use leptos::*;
 cfg_if! {
 if #[cfg(feature = "ssr")] {
     use axum::{
-        routing::{post},
+        routing::{get, post},
         extract::Extension,
         Router,
     };
@@ -38,6 +38,7 @@ if #[cfg(feature = "ssr")] {
         // build our application with a route
         let app = Router::new()
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
+        .route("/favicon.ico", get(file_handler))
         .leptos_routes(leptos_options.clone(), routes, |cx| view! { cx, <App/> } )
         .fallback(file_handler)
         .layer(Extension(Arc::new(leptos_options)));

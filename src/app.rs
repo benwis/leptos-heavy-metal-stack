@@ -9,6 +9,7 @@ pub fn App(cx: Scope) -> impl IntoView {
     view! {
         cx,
         <div>
+        <Link rel="shortcut icon" type_="image/ico" href="/favicon.ico"/>
         <Stylesheet id="leptos" href="/static/styles/output.css" />
             <Router>
                 <header>
